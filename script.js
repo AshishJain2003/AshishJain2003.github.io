@@ -50,16 +50,36 @@ document.querySelectorAll('.card').forEach(card => {
     observer.observe(card);
 });
 
+function displayCurrentTime() {
+    const timeElement = document.getElementById('currentTime');
+    if (timeElement) {
+        const now = new Date();
+        const options = {
+            timeZone: 'Asia/Kolkata',
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: true
+        };
+        timeElement.textContent = `Current Time: ${now.toLocaleString('en-IN', options)} (IST)`;
+    }
+}
+
+// Update the time every second
+setInterval(displayCurrentTime, 1000);
+
+// Call the function immediately on page load
+document.addEventListener('DOMContentLoaded', displayCurrentTime);
 
 
-// ===================================================
-// ========== CODE FOR ASSIGNMENT Q6 START ===========
-// ===================================================
 
 /**
- * This function captures and logs user events to the console.
- * @param {string} eventType - The type of event, e.g., 'view' or 'click'.
- * @param {HTMLElement} targetElement - The element that triggered the event.
+ * @param {string} eventType 
+ * @param {HTMLElement} targetElement
  */
 function logActivity(eventType, targetElement) {
     const timestamp = new Date().toISOString();
@@ -78,17 +98,11 @@ function logActivity(eventType, targetElement) {
     );
 }
 
-// 1. Track the initial "page view"
 document.addEventListener('DOMContentLoaded', () => {
     logActivity('view', document.body);
 });
 
-// 2. Track all "click" events on the page
 document.addEventListener('click', (event) => {
     // `event.target` is the specific element that was clicked.
     logActivity('click', event.target);
 });
-
-// ===================================================
-// =========== CODE FOR ASSIGNMENT Q6 END ============
-// ===================================================
